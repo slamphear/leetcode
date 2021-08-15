@@ -1,4 +1,9 @@
-class Solution {
+/*
+ Problem 9: Palindrome Number
+ https://leetcode.com/problems/palindrome-number/
+ */
+
+class Solution9 {
     var intArray: [Int] = []
 
     func isPalindrome(_ x: Int) -> Bool {
@@ -39,24 +44,24 @@ class Solution {
     }
 }
 
-let testCases = [
-    0,
-    -1,
-    -9,
-    121,
-    -121,
-    10,
-    -101,
-    123
-]
-
-func runTests() {
-    let solution = Solution()
-
-    for x in testCases {
-        print("Is \(x) a palindrome? \(solution.isPalindrome(x))")
-    }
-}
-
-
-runTests()
+//let testCases = [
+//    0,
+//    -1,
+//    -9,
+//    121,
+//    -121,
+//    10,
+//    -101,
+//    123
+//]
+//
+//func runTests() {
+//    let solution = Solution()
+//
+//    for x in testCases {
+//        print("Is \(x) a palindrome? \(solution.isPalindrome(x))")
+//    }
+//}
+//
+//
+//runTests()
