@@ -57,11 +57,17 @@ extension ListNode {
         
         return node
     }
-    
-    var description: String {
-        get {
-            ""
+
+    func toIntArray() -> [Int] {
+        var array = [Int]()
+        var node: ListNode? = self
+        
+        while let unwrappedNode = node {
+            array.append(unwrappedNode.val)
+            node = unwrappedNode.next
         }
+
+        return array
     }
 }
 
@@ -93,12 +99,12 @@ let testCases = [
 
 for testCase in testCases {
     guard solution.addTwoNumbers(testCase.l1, testCase.l2) == testCase.output else {
-        let l1 = testCase.l1?.description ?? "[]"
-        let l2 = testCase.l2?.description ?? "[]"
-        let output = solution.addTwoNumbers(testCase.l1, testCase.l2)?.description ?? "[]"
-        let expectedOutput = testCase.output?.description ?? "[]"
+        let l1 = testCase.l1?.toIntArray() ?? []
+        let l2 = testCase.l2?.toIntArray() ?? []
+        let output = solution.addTwoNumbers(testCase.l1, testCase.l2)?.toIntArray() ?? []
+        let expectedOutput = testCase.output?.toIntArray() ?? []
         
-        print("FAILURE: Test case with nums \(l1) and target \(l2) returned \(output). Expected output was \(expectedOutput)")
+        print("FAILURE: Test case with l1 \(l1) and l2 \(l2) returned \(output). Expected output was \(expectedOutput)")
         continue
     }
     
