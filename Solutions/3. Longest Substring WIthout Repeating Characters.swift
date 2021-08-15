@@ -10,34 +10,50 @@ class Solution {
         var currentSubstringLength = 0
         var maxSubstringLength = 0
         var previousCharacters = [Character:Int]() // [character in string : index of that character]
-
+        
         for (index, character) in s.enumerated() {
             if let previousIndex = previousCharacters[character] {
-                previousCharacters = previousCharacters.filter { $0.value <= previousIndex }
+                previousCharacters = previousCharacters.filter { $0.value > previousIndex }
                 currentSubstringLength = previousCharacters.count
             }
-
+            
             currentSubstringLength += 1
-
+            
             if currentSubstringLength > maxSubstringLength {
                 maxSubstringLength = currentSubstringLength
             }
-
+            
             previousCharacters[character] = index
         }
-
+        
         return maxSubstringLength
     }
 }
 
 //MARK: Test Script
 
-func runTests() {
-    let solution = Solution()
-    print(solution.lengthOfLongestSubstring(" ")) // print 1
-    print(solution.lengthOfLongestSubstring("dvdf")) // print 3
-    print(solution.lengthOfLongestSubstring("pwwkew")) // print 3
-    print(solution.lengthOfLongestSubstring("abcabcabcdabc"))
+struct TestCase {
+    let s: String
+    let output: Int
 }
 
-runTests()
+let solution = Solution()
+
+let testCases = [
+    TestCase(s: "abcabcbb", output: 3),
+    TestCase(s: "bbbbb", output: 1),
+    TestCase(s: "pwwkew", output: 3),
+    TestCase(s: "", output: 0),
+    TestCase(s: " ", output: 1),
+    TestCase(s: "dvdf", output: 3),
+    TestCase(s: "pwwkew", output: 3)
+]
+
+for testCase in testCases {
+    guard solution.lengthOfLongestSubstring(testCase.s) == testCase.output else {
+        print("FAILURE: Test case \(testCase.s) returned \(solution.lengthOfLongestSubstring(testCase.s)). Expected output was \(testCase.output)")
+        continue
+    }
+    
+    print("Test case passed")
+}
