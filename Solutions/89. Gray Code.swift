@@ -16,6 +16,8 @@
  closer look at the expected output and figure out the pattern for what it's expecting.
  */
 
+//MARK: Solution
+
 extension Int {
     var binaryString: String {
         String(self, radix: 2)
@@ -36,7 +38,7 @@ extension Character {
     }
 }
 
-class Solution89 {
+class Solution {
     func grayCode(_ n: Int) -> [Int] {
         let startingString = String(repeating: "0", count: n)
         var binaryStrings: [String] = [startingString]
@@ -76,6 +78,7 @@ class Solution89 {
     }
 }
 
+//MARK: Test Script
 //TODO: Write tests
 
 //print(Solution().grayCode(3))

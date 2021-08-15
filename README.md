@@ -1,16 +1,10 @@
 # LeetCode-Swift
-Swift solutions for LeetCode problems with unit tests!
+Swift solutions for LeetCode problems with test cases!
 
-These are being used as practice problems, so I'm not consulting existing solutions or discussion sections.
+These are being used as practice problems, so I'm not consulting existing solutions or discussion sections. As a result, these are not references for the *best* solutions to each of these problems, but all solutions have been submitted to (and accepted by) LeetCode unless noted otherwise in a solution's file header.
 
-The solutions themselves are in the root-level "Solutions" folder; however, before being submitted, the problem number will need to be removed from the Solution class.
+To compile and run the test cases for a solution, just enter
 
-E.g., the first line
+`swift /path/to/file.swift`
 
-`class Solution1 {`
-
-in "1. Two Sum.swift" will need to be replaced with
-
-`class Solution {`
-
-before submitting.
+in the Terminal.

@@ -3,7 +3,9 @@
  https://leetcode.com/problems/palindrome-number/
  */
 
-class Solution9 {
+//MARK: Solution
+
+class Solution {
     var intArray: [Int] = []
 
     func isPalindrome(_ x: Int) -> Bool {
@@ -44,24 +46,31 @@ class Solution9 {
     }
 }
 
-//let testCases = [
-//    0,
-//    -1,
-//    -9,
-//    121,
-//    -121,
-//    10,
-//    -101,
-//    123
-//]
-//
-//func runTests() {
-//    let solution = Solution()
-//
-//    for x in testCases {
-//        print("Is \(x) a palindrome? \(solution.isPalindrome(x))")
-//    }
-//}
-//
-//
-//runTests()
+//MARK: Test Script
+
+struct TestCase {
+    let x: Int
+    let output: Bool
+}
+
+let solution = Solution()
+
+let testCases = [
+    TestCase(x: 0, output: true),
+    TestCase(x: -1, output: false),
+    TestCase(x: -9, output: false),
+    TestCase(x: 121, output: true),
+    TestCase(x: -121, output: false),
+    TestCase(x: 10, output: false),
+    TestCase(x: 101, output: true),
+    TestCase(x: 123, output: false)
+]
+
+for testCase in testCases {
+    guard solution.isPalindrome(testCase.x) == testCase.output else {
+        print("FAILURE: Test case \(testCase.x) returned \(solution.isPalindrome(testCase.x)). Expected output was \(testCase.output)")
+        continue
+    }
+    
+    print("Test case passed")
+}

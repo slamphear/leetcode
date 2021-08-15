@@ -3,7 +3,9 @@
  https://leetcode.com/problems/longest-substring-without-repeating-characters/
  */
 
-class Solution3 {
+//MARK: Solution
+
+class Solution {
     func lengthOfLongestSubstring(_ s: String) -> Int {
         var currentSubstringLength = 0
         var maxSubstringLength = 0
@@ -28,9 +30,14 @@ class Solution3 {
     }
 }
 
-//TODO: Clean up tests
+//MARK: Test Script
 
-//print(lengthOfLongestSubstring(" ")) // print 1
-//print(lengthOfLongestSubstring("dvdf")) // print 3
-//print(lengthOfLongestSubstring("pwwkew")) // print 3
-//print(lengthOfLongestSubstring("abcabcabcdabc"))
+func runTests() {
+    let solution = Solution()
+    print(solution.lengthOfLongestSubstring(" ")) // print 1
+    print(solution.lengthOfLongestSubstring("dvdf")) // print 3
+    print(solution.lengthOfLongestSubstring("pwwkew")) // print 3
+    print(solution.lengthOfLongestSubstring("abcabcabcdabc"))
+}
+
+runTests()

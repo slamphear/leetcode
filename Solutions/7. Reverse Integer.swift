@@ -3,9 +3,11 @@
  https://leetcode.com/problems/reverse-integer/
  */
 
+//MARK: Solution
+
 import Foundation
 
-class Solution7 {
+class Solution {
     func reverse(_ x: Int) -> Int {
         
         // Trivial case: nothing to reverse.
@@ -36,26 +38,13 @@ class Solution7 {
     }
 }
 
+//MARK: Test Script
 //TODO: Clean up tests
 
-//func runTests() {
-//    print(findMedianSortedArrays([], [])) // Trivial case: Median is 0.0
-//    print(findMedianSortedArrays([], [1, 2, 3])) // Trivial case (one array is empty), odd version: median is 2.0
-//    print(findMedianSortedArrays([], [1, 2, 3, 4])) // Trivial case (one array is empty), even version: median is 2.5
-//    print(findMedianSortedArrays([1, 2, 3], [])) // Trivial case (one array is empty), odd version: median is 2.0
-//    print(findMedianSortedArrays([1, 2, 3, 4], [])) // Trivial case (one array is empty), even version: median is 2.5
-//    print(findMedianSortedArrays([1], [2])) // Median is 1.5
-//    print(findMedianSortedArrays([1, 2], [-1, 3])) // Median is 1.5
-//    print(findMedianSortedArrays([1], [2, 3])) // Median is 2.0
-//    print(findMedianSortedArrays([1, 3], [2])) // Median is 2.0
-//    print(findMedianSortedArrays([1, 2], [3, 4])) // Median is 2.5
-//    print(findMedianSortedArrays([1000], [1, 2, 3])) // Median is 2.5
-//    print(findMedianSortedArrays([1, 2, 7, 8], [3, 4, 5, 6])) // Median is 4.5
-//    print(findMedianSortedArrays([1, 1, 1, 1, 1, 1, 13], [1, 1, 1, 1, 1, 1, 578])) // Median is 1.0
-//    print(findMedianSortedArrays([1], [2,3,4,5])) // Median is 3.0
-    
-//    print(reverse(123))
-//    print(reverse(-23))
-//    print(reverse(0))
-//    print(reverse(2158962349875897))
-//}
+func runTests() {
+    let solution = Solution()
+    print(solution.reverse(123))
+    print(solution.reverse(-23))
+    print(solution.reverse(0))
+    print(solution.reverse(2158962349875897))
+}

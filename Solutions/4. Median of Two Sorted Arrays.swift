@@ -9,7 +9,9 @@
  Expected: 3.00000
  */
 
-class Solution4 {
+//MARK: Solution
+
+class Solution {
     func findMedianSortedArrays(_ nums1: [Int], _ nums2: [Int]) -> Double {
         let isMedianAtEvenPosition = (nums1.count + nums2.count) % 2 == 0
         var currentFirstIndex = 0
@@ -185,4 +187,42 @@ class Solution4 {
     }
 }
 
-//TODO: Write tests
+//MARK: Test Script
+
+struct TestCase {
+    let nums1: [Int]
+    let nums2: [Int]
+    let output: Double
+}
+
+func runTests() {
+    let solution = Solution()
+    
+    let testCases = [
+        TestCase(nums1: [], nums2: [], output: 0.0),
+        TestCase(nums1: [], nums2: [1, 2, 3], output: 2.0),
+        TestCase(nums1: [], nums2: [1, 2, 3, 4], output: 2.5),
+        TestCase(nums1: [1, 2, 3], nums2: [], output: 2.0),
+        TestCase(nums1: [1, 2, 3, 4], nums2: [], output: 2.5),
+        TestCase(nums1: [1], nums2: [2], output: 1.5),
+        TestCase(nums1: [1, 2], nums2: [-1, 3], output: 1.5),
+        TestCase(nums1: [1], nums2: [2, 3], output: 2.0),
+        TestCase(nums1: [1, 3], nums2: [2], output: 2.0),
+        TestCase(nums1: [1, 2], nums2: [3, 4], output: 2.5),
+        TestCase(nums1: [1000], nums2: [1, 2, 3], output: 2.5),
+        TestCase(nums1: [1, 2, 7, 8], nums2: [3, 4, 5, 6], output: 4.5),
+        TestCase(nums1: [1, 1, 1, 1, 1, 1, 13], nums2: [1, 1, 1, 1, 1, 1, 578], output: 1.0),
+        TestCase(nums1: [1], nums2: [2, 3, 4, 5], output: 3.0)
+    ]
+    
+    for testCase in testCases {
+        guard solution.findMedianSortedArrays(testCase.nums1, testCase.nums2) == testCase.output else {
+            print("FAILURE: Test case with nums1 \(testCase.nums1) and nums2 \(testCase.nums2) returned \(solution.findMedianSortedArrays(testCase.nums1, testCase.nums2)). Expected output was \(testCase.output)")
+            continue
+        }
+        
+        print("Test case passed")
+    }
+}
+
+runTests()
