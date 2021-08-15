@@ -11,14 +11,14 @@ class Solution {
     func isPalindrome(_ x: Int) -> Bool {
         //Trivial case 1: x is negative (no negative number can be a palindrome)
         guard x >= 0 else { return false }
-
+        
         //Trivial case 2: we only have one digit!
         guard x > 9 else { return true }
-
+        
         //Step 1: Convert int to array of single digits
         self.intArray = []
         self.buildArray(from: x)
-
+        
         //Step 2: Use recursive function to see if it's a palindrome
         return checkForPalindrominess()
     }

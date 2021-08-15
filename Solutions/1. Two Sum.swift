@@ -8,7 +8,7 @@
 class Solution {
     func twoSum(_ nums: [Int], _ target: Int) -> [Int] {
         var complements = [Int:Int]()
-
+        
         for currentIndex in nums.indices {
             let currentNumber = nums[currentIndex]
             let complement = target - currentNumber
