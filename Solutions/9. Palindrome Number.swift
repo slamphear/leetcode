@@ -23,14 +23,14 @@ class Solution {
         return checkForPalindrominess()
     }
 
-    func buildArray(from x: Int) {
+    private func buildArray(from x: Int) {
         intArray.append(x % 10)
         
         guard x > 9 else { return }
         self.buildArray(from: x / 10)
     }
 
-    func checkForPalindrominess() -> Bool {
+    private func checkForPalindrominess() -> Bool {
         //Base case: we got all the way to a middle digit (or there is no middle digit)
         guard self.intArray.count > 1 else { return true }
         
