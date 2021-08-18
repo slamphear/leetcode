@@ -1,102 +1,79 @@
 /*
  Problem 5: Longest Palindromic Substring
  https://leetcode.com/problems/longest-palindromic-substring/
- 
- This solution is a work in progress. All known test cases have passed, but this submission exceeded the time limit when given the following input (which has been included below as a test case):
- "zudfweormatjycujjirzjpyrmaxurectxrtqedmmgergwdvjmjtstdhcihacqnothgttgqfywcpgnuvwglvfiuxteopoyizgehkwuvvkqxbnufkcbodlhdmbqyghkojrgokpwdhtdrwmvdegwycecrgjvuexlguayzcammupgeskrvpthrmwqaqsdcgycdupykppiyhwzwcplivjnnvwhqkkxildtyjltklcokcrgqnnwzzeuqioyahqpuskkpbxhvzvqyhlegmoviogzwuiqahiouhnecjwysmtarjjdjqdrkljawzasriouuiqkcwwqsxifbndjmyprdozhwaoibpqrthpcjphgsfbeqrqqoqiqqdicvybzxhklehzzapbvcyleljawowluqgxxwlrymzojshlwkmzwpixgfjljkmwdtjeabgyrpbqyyykmoaqdambpkyyvukalbrzoyoufjqeftniddsfqnilxlplselqatdgjziphvrbokofvuerpsvqmzakbyzxtxvyanvjpfyvyiivqusfrsufjanmfibgrkwtiuoykiavpbqeyfsuteuxxjiyxvlvgmehycdvxdorpepmsinvmyzeqeiikajopqedyopirmhymozernxzaueljjrhcsofwyddkpnvcvzixdjknikyhzmstvbducjcoyoeoaqruuewclzqqqxzpgykrkygxnmlsrjudoaejxkipkgmcoqtxhelvsizgdwdyjwuumazxfstoaxeqqxoqezakdqjwpkrbldpcbbxexquqrznavcrprnydufsidakvrpuzgfisdxreldbqfizngtrilnbqboxwmwienlkmmiuifrvytukcqcpeqdwwucymgvyrektsnfijdcdoawbcwkkjkqwzffnuqituihjaklvthulmcjrhqcyzvekzqlxgddjoir"
- 
- I'll need to figure out a way to get this to work in O(1) time. I think the way to do this is to actually reverse the given string and find the longest common subsequence between the given string and the reversed one.
  */
 
 //MARK: Solution
 
-class Solution {
-    private var currentSubstring = ""
+struct IntRange {
+    let start: Int
+    let end: Int
+    let length: Int
     
-    func longestPalindrome(_ s: String) -> String {
-        //Trivial case: the given string is empty.
-        guard let firstCharacter = s.first else { return "" }
+    init(_ start: Int, to end: Int) {
+        self.start = start
+        self.end = end
+        self.length = end - start
+    }
+}
+
+extension Array where Element == Character {
+    func longestPalindromeWithCenterAtIndex(_ index: Int) -> IntRange {
+        guard index < self.count - 1 else {
+            return self.longestPalindromeWithCenterIndices(index, and: index)
+        }
         
-        var longestPalindromicSubstring = String(firstCharacter)
+        let oddLengthPalindrome = self.longestPalindromeWithCenterIndices(index, and: index)
+        let evenLengthPalindrome = self.longestPalindromeWithCenterIndices(index, and: index + 1)
+        
+        guard evenLengthPalindrome.length < oddLengthPalindrome.length else {
+            return evenLengthPalindrome
+        }
+        
+        return oddLengthPalindrome
+    }
+    
+    private func longestPalindromeWithCenterIndices(_ startIndex: Int, and endIndex: Int) -> IntRange {
+        var longestPalindrome = IntRange(startIndex, to: startIndex)
+        var start = startIndex
+        var end = endIndex
+        
+        while start >= 0 && end < self.count {
+            guard self[start] == self[end] else { break }
+            
+            longestPalindrome = IntRange(start, to: end)
+            
+            //Prepare for next iteration.
+            start -= 1
+            end += 1
+        }
+        
+        return longestPalindrome
+    }
+}
+
+class Solution {
+    func longestPalindrome(_ s: String) -> String {
+        let characters = Array(s)
+        
+        //Trivial case: the given string is empty.
+        guard !s.isEmpty else { return "" }
+        
+        //Declare variables and constants used while looping.
+        var longestPalindromicSubstring = IntRange(0, to: 0)
         
         //Outermost loop: move the starting character forward, one character at a time.
-        for index in s.indices {
-            guard index != s.indices.last else { break }
+        for index in 0..<characters.count {
+            let longestPalindromeInThisSubstring = characters.longestPalindromeWithCenterAtIndex(index)
             
-            let substring = String(s.suffix(from: index))
-            
-            guard substring.count > longestPalindromicSubstring.count else {
-                // Optimization: At this point, no substring can be longer than the one we've already found, so quit early.
-                break
-            }
-            
-            let longestPalindromeInThisSubstring = self.longestPalindromeStartingFromFirstCharacter(in: substring)
-            
-            if longestPalindromeInThisSubstring.count > longestPalindromicSubstring.count {
+            if longestPalindromeInThisSubstring.length > longestPalindromicSubstring.length {
                 longestPalindromicSubstring = longestPalindromeInThisSubstring
             }
         }
         
-        return longestPalindromicSubstring
-    }
-    
-    private func longestPalindromeStartingFromFirstCharacter(in string: String) -> String {
-        //Trivial case 1: the given string is empty.
-        guard let firstCharacter = string.first else { return "" }
-        
-        //Trivial case 2: the entire string is a palindrome.
-        self.currentSubstring = string
-        guard !self.isCurrentSubstringAPalindrome() else { return string }
-        
-        //Trivial case 3: the first character never reappears.
-        let firstCharacterIndex = string.indices.first
-        guard var lastOccurrenceOfFirstCharacter = string.lastIndex(of: firstCharacter), lastOccurrenceOfFirstCharacter != firstCharacterIndex else {
-            return String(firstCharacter)
-        }
-        
-        //Now that trivial cases are handled, iterate through the string.
-        var longestPalindromicSubstring = String(describing: firstCharacter)
-        
-        while lastOccurrenceOfFirstCharacter != firstCharacterIndex {
-            let substring = String(string.prefix(through: lastOccurrenceOfFirstCharacter))
-            self.currentSubstring = substring
-            
-            guard substring.count > longestPalindromicSubstring.count else {
-                break
-            }
-            
-            guard !self.isCurrentSubstringAPalindrome() else {
-                longestPalindromicSubstring = substring
-                break
-            }
-            
-            //Prepare for next iteration.
-            guard let lastOccurrenceInSubstring = substring.dropLast().lastIndex(of: firstCharacter) else {
-                fatalError("The first character cannot be found in this substring, even though it's the first character in it!")
-            }
-            
-            lastOccurrenceOfFirstCharacter = lastOccurrenceInSubstring
-        }
-        
-        return longestPalindromicSubstring
-    }
-    
-    private func isCurrentSubstringAPalindrome() -> Bool {
-        //Base case: we got all the way to a middle character (or there is no middle character)
-        guard self.currentSubstring.count > 1 else { return true }
-        
-        //Step 1: Extract the first and last digits
-        let firstDigit = self.currentSubstring.removeFirst()
-        let lastDigit = self.currentSubstring.removeLast()
-        
-        //Step 2: Return false if the first and last digits don't match
-        guard firstDigit == lastDigit else { return false }
-        
-        //Step 3: Recurse
-        return self.isCurrentSubstringAPalindrome()
+        return String(characters[longestPalindromicSubstring.start...longestPalindromicSubstring.end])
     }
 }
-
 
 //MARK: Test Script
 
@@ -113,6 +90,8 @@ let testCases = [
     TestCase(s: "a", output: "a"),
     TestCase(s: "ac", output: "a"),
     TestCase(s: "bb", output: "bb"),
+    TestCase(s: "aaaaa", output: "aaaaa"),
+    TestCase(s: "eeeeeeeee", output: "eeeeeeeee"),
     TestCase(s: "zudfweormatjycujjirzjpyrmaxurectxrtqedmmgergwdvjmjtstdhcihacqnothgttgqfywcpgnuvwglvfiuxteopoyizgehkwuvvkqxbnufkcbodlhdmbqyghkojrgokpwdhtdrwmvdegwycecrgjvuexlguayzcammupgeskrvpthrmwqaqsdcgycdupykppiyhwzwcplivjnnvwhqkkxildtyjltklcokcrgqnnwzzeuqioyahqpuskkpbxhvzvqyhlegmoviogzwuiqahiouhnecjwysmtarjjdjqdrkljawzasriouuiqkcwwqsxifbndjmyprdozhwaoibpqrthpcjphgsfbeqrqqoqiqqdicvybzxhklehzzapbvcyleljawowluqgxxwlrymzojshlwkmzwpixgfjljkmwdtjeabgyrpbqyyykmoaqdambpkyyvukalbrzoyoufjqeftniddsfqnilxlplselqatdgjziphvrbokofvuerpsvqmzakbyzxtxvyanvjpfyvyiivqusfrsufjanmfibgrkwtiuoykiavpbqeyfsuteuxxjiyxvlvgmehycdvxdorpepmsinvmyzeqeiikajopqedyopirmhymozernxzaueljjrhcsofwyddkpnvcvzixdjknikyhzmstvbducjcoyoeoaqruuewclzqqqxzpgykrkygxnmlsrjudoaejxkipkgmcoqtxhelvsizgdwdyjwuumazxfstoaxeqqxoqezakdqjwpkrbldpcbbxexquqrznavcrprnydufsidakvrpuzgfisdxreldbqfizngtrilnbqboxwmwienlkmmiuifrvytukcqcpeqdwwucymgvyrektsnfijdcdoawbcwkkjkqwzffnuqituihjaklvthulmcjrhqcyzvekzqlxgddjoir", output: "gykrkyg")
 ]
 
