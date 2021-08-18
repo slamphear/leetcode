@@ -38,8 +38,9 @@ let testCases = [
 ]
 
 for testCase in testCases {
-    guard solution.twoSum(testCase.nums, testCase.target) == testCase.output else {
-        print("FAILURE: Test case with nums \(testCase.nums) and target \(testCase.target) returned \(solution.twoSum(testCase.nums, testCase.target)). Expected output was \(testCase.output)")
+    let output = solution.twoSum(testCase.nums, testCase.target)
+    guard output == testCase.output else {
+        print("FAILURE: Test case with nums \(testCase.nums) and target \(testCase.target) returned \(output). Expected output was \(testCase.output)")
         continue
     }
     

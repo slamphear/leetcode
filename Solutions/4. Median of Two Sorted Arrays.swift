@@ -198,8 +198,9 @@ let testCases = [
 ]
 
 for testCase in testCases {
-    guard solution.findMedianSortedArrays(testCase.nums1, testCase.nums2) == testCase.output else {
-        print("FAILURE: Test case with nums1 \(testCase.nums1) and nums2 \(testCase.nums2) returned \(solution.findMedianSortedArrays(testCase.nums1, testCase.nums2)). Expected output was \(testCase.output)")
+    let output = solution.findMedianSortedArrays(testCase.nums1, testCase.nums2)
+    guard output == testCase.output else {
+        print("FAILURE: Test case with nums1 \(testCase.nums1) and nums2 \(testCase.nums2) returned \(output). Expected output was \(testCase.output)")
         continue
     }
     

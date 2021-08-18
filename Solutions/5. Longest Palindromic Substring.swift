@@ -96,8 +96,9 @@ let testCases = [
 ]
 
 for testCase in testCases {
-    guard solution.longestPalindrome(testCase.s) == testCase.output else {
-        print("FAILURE: Test case \"\(testCase.s)\" returned \"\(solution.longestPalindrome(testCase.s))\". Expected output was \"\(testCase.output)\".")
+    let output = solution.longestPalindrome(testCase.s)
+    guard output == testCase.output else {
+        print("FAILURE: Test case \"\(testCase.s)\" returned \"\(output)\". Expected output was \"\(testCase.output)\".")
         continue
     }
     

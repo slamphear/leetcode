@@ -50,8 +50,9 @@ let testCases = [
 ]
 
 for testCase in testCases {
-    guard solution.lengthOfLongestSubstring(testCase.s) == testCase.output else {
-        print("FAILURE: Test case \(testCase.s) returned \(solution.lengthOfLongestSubstring(testCase.s)). Expected output was \(testCase.output)")
+    let output = solution.lengthOfLongestSubstring(testCase.s)
+    guard output == testCase.output else {
+        print("FAILURE: Test case \(testCase.s) returned \(output). Expected output was \(testCase.output)")
         continue
     }
     

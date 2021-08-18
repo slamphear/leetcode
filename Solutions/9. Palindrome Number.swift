@@ -67,8 +67,9 @@ let testCases = [
 ]
 
 for testCase in testCases {
-    guard solution.isPalindrome(testCase.x) == testCase.output else {
-        print("FAILURE: Test case \(testCase.x) returned \(solution.isPalindrome(testCase.x)). Expected output was \(testCase.output)")
+    let output = solution.isPalindrome(testCase.x)
+    guard output == testCase.output else {
+        print("FAILURE: Test case \(testCase.x) returned \(output). Expected output was \(testCase.output)")
         continue
     }
     
